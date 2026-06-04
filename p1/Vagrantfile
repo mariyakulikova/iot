@@ -1,0 +1,23 @@
+SERVICES = {
+    'server' => {
+        'ip' => '192.168.56.110',
+    },
+    'server_worker' => {
+        'ip' => '192.168.56.111',
+    },
+}
+
+Vagrant.configure("2") do |config|
+    config.vm.box = REDACTED
+    config.vm.box_url = REDACTED
+
+    config.vm.define "mkulikovS" do |control|
+            control.vm.hostname = "mkulikovS"
+            control.vm.network "private_network", ip: SERVICES['server'][:ip]
+            control.vm.provider "virtualbox" do |v|
+                v.costomize ["modifyvm", :id, "--memory", "mkulikovS"]
+        end
+            config.vm.provision :shell, :inline => SHELL
+        SHELL
+            control.vm.provision "shell", path: REDACTED
+    end 
