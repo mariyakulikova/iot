@@ -19,7 +19,7 @@ PROVIDER = {
 }
 
 Vagrant.configure("2") do |config|
-    config.vm.box = "debian/bookworm64"
+    config.vm.box = "bento/debian-13"
     config.vm.provision "shell", name: "common_dependencies", path: "scripts/common_dependencies.sh"
 
     config.vm.define SERVICES[:server][:name] do |config|
