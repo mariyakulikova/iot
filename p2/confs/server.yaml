@@ -1,0 +1,5 @@
+node-ip: "192.168.56.110"
+advertise-address: "192.168.56.110"
+tls-san:
+  - "192.168.56.110"
+  - "mkulikovS"
