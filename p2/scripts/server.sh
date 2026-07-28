@@ -12,7 +12,7 @@ mkdir -p "$CONFIG_DIRECTORY"
 
 cp /vagrant/confs/server.yaml "$CONFIG_DIRECTORY/config.yaml"
 
-chmod 0600 "$CONFIG_DIRECTORY/config.yaml"
+chmod 0644 "$CONFIG_DIRECTORY/config.yaml"
 
 curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
 
@@ -21,11 +21,9 @@ VAGRANT_BASHRC="/home/vagrant/.bashrc"
 
 grep -qxF "$KUBECTL_ALIAS" "$VAGRANT_BASHRC" || echo "$KUBECTL_ALIAS" >> "$VAGRANT_BASHRC"
 
-timeout 180 bash -c '
-    until kubectl get nodes >/dev/null 2>&1; do
-        sleep 2
-    done
-'
+timeout 180 bash -c 'until kubectl get --raw=/readyz >/dev/null 2>&1; do sleep 2; done'
+
+kubectl get nodes
 
 kubectl wait --for=condition=Ready node --all --timeout=180s
 
